@@ -1,0 +1,3 @@
+# Experimental: unmask only after isolated ARM64 validation and migration review.
+net-proxy/clash-nyanpasu-bin
+net-proxy/nyanpasu-service-bin

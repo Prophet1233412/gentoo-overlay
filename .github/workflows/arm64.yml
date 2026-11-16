@@ -1,0 +1,24 @@
+name: ARM64 Gentoo staging
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  stage:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stage both packages without activating services
+        run: |
+          docker run --rm -v "$PWD:/overlay:ro" gentoo/stage3:latest bash -euxc '
+            emerge-webrsync
+            mkdir -p /etc/portage/repos.conf
+            printf "[prophet-overlay]\nlocation = /overlay\nmasters = gentoo\n" > /etc/portage/repos.conf/prophet.conf
+            printf "net-proxy/clash-nyanpasu-bin\nnet-proxy/nyanpasu-service-bin\n" > /etc/portage/package.unmask
+            export ACCEPT_KEYWORDS="~arm64"
+            emerge --oneshot app-portage/pkgcheck
+            pkgcheck scan --exit error /overlay
+            for spec in nyanpasu-service-bin/nyanpasu-service-bin-2.0.2 clash-nyanpasu-bin/clash-nyanpasu-bin-2.0.1; do
+              ebuild "/overlay/net-proxy/${spec}.ebuild" clean fetch unpack prepare compile install
+            done
+          '

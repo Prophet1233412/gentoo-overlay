@@ -1,0 +1,14 @@
+#!/sbin/openrc-run
+# EXAMPLE ONLY: replace these paths after auditing the existing installation.
+description="Nyanpasu privileged service"
+command="/usr/sbin/nyanpasu-service"
+command_args="server --nyanpasu-config-dir /REPLACE/config --nyanpasu-data-dir /REPLACE/data --nyanpasu-app-dir /opt/clash-nyanpasu-bin/usr/bin --service"
+command_background=true
+pidfile="/run/nyanpasu-overlay.pid"
+output_log="/var/log/nyanpasu-overlay.log"
+error_log="/var/log/nyanpasu-overlay.log"
+depend() { need localmount; use net; }
+start_pre() {
+    eerror "Example requires migration review and explicit activation; see metadata/documentation/migration.md"
+    return 1
+}
