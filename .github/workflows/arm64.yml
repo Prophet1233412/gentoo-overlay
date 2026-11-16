@@ -16,7 +16,7 @@ jobs:
             printf "[prophet-overlay]\nlocation = /overlay\nmasters = gentoo\n" > /etc/portage/repos.conf/prophet.conf
             printf "net-proxy/clash-nyanpasu-bin\nnet-proxy/nyanpasu-service-bin\n" > /etc/portage/package.unmask
             export ACCEPT_KEYWORDS="~arm64"
-            emerge --oneshot app-portage/pkgcheck
+            emerge --oneshot dev-util/pkgcheck
             pkgcheck scan --exit error /overlay
             for spec in nyanpasu-service-bin/nyanpasu-service-bin-2.0.2 clash-nyanpasu-bin/clash-nyanpasu-bin-2.0.1; do
               ebuild "/overlay/net-proxy/${spec}.ebuild" clean fetch unpack prepare compile install
