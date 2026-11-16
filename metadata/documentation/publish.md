@@ -1,5 +1,9 @@
 # Publishing from an authorized terminal
 
+The owner has now created the public repository and the initial overlay is pushed.
+The following steps describe recovery or publishing another checkout.
+
+
 The connected integration could read the account identity but could not create a repository.
 Create an empty PUBLIC repository named gentoo-overlay under Prophet1233412 in GitHub,
 and grant the GitHub app access to this repository (including workflow file writes).
